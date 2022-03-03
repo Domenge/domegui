@@ -97,7 +97,7 @@ impl epi::App for TemplateApp {
         egui::CentralPanel::default().show(ctx, |ui| {
             // The central panel the region left after adding TopPanel's and SidePanel's
 
-            ui.heading("eframe template");
+            ui.heading("Taquin");
             ui.hyperlink("https://github.com/emilk/eframe_template");
             ui.add(egui::github_link_file!(
                 "https://github.com/emilk/eframe_template/blob/master/",
@@ -106,7 +106,7 @@ impl epi::App for TemplateApp {
             egui::warn_if_debug_build(ui);
         });
 
-        if false {
+        if true {
             egui::Window::new("Window").show(ctx, |ui| {
                 ui.label("Windows can be moved by dragging them.");
                 ui.label("They are automatically sized based on contents.");
