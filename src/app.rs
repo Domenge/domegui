@@ -24,7 +24,7 @@ impl Default for TemplateApp {
 
 impl epi::App for TemplateApp {
     fn name(&self) -> &str {
-        "eframe template"
+        "Taquin game"
     }
 
     /// Called once before the first frame.
@@ -98,15 +98,21 @@ impl epi::App for TemplateApp {
             // The central panel the region left after adding TopPanel's and SidePanel's
 
             ui.heading("Taquin");
-            ui.hyperlink("https://github.com/emilk/eframe_template");
+            ui.hyperlink("https://github.com/Domenge/domegui");
             ui.add(egui::github_link_file!(
-                "https://github.com/emilk/eframe_template/blob/master/",
+                "https://github.com/Domenge/domegui/blob/master/",
                 "Source code."
             ));
+
+            for i in 0..25{
+                if ui.add(egui::Button::new(format!("{}",i))).clicked(){
+                    println!("pressed {}",i);
+                }
+            }    
             egui::warn_if_debug_build(ui);
         });
 
-        if true {
+        if false {
             egui::Window::new("Window").show(ctx, |ui| {
                 ui.label("Windows can be moved by dragging them.");
                 ui.label("They are automatically sized based on contents.");
