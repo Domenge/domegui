@@ -104,11 +104,36 @@ impl epi::App for TemplateApp {
                 "Source code."
             ));
 
-            for i in 0..25{
+/*             for i in 0..25{
                 if ui.add(egui::Button::new(format!("{}",i))).clicked(){
                     println!("pressed {}",i);
                 }
-            }    
+            }
+ */
+            let size:u8 = 5;
+            let maxcells :u8 = size.pow(2);
+            assert_eq!(maxcells, 25);
+            egui::Grid::new("some_unique_id").show(ui, |ui| {
+                for i in 0..maxcells{
+                    let _line = i / size;
+                    let col = i % size;
+
+                    //ui.label(format!("col {}; line {}", col, line));
+                    if ui.add(egui::Button::new(format!("{}",i))).clicked(){
+                        println!("pressed {}",i);
+                    }
+                    //egui::ImageButton::new()
+                    if col == size - 1{
+                        ui.end_row();
+                    }
+                }
+            
+                // ui.horizontal(|ui| { ui.label("Same"); ui.label("cell"); });
+                // ui.label("Third row, second column");
+                // ui.label("Third row, second column");
+                // ui.label("Third row, second column");
+                // ui.end_row();
+            });    
             egui::warn_if_debug_build(ui);
         });
 
