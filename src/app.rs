@@ -22,6 +22,19 @@ impl Default for TemplateApp {
     }
 }
 
+fn _doc_link_label<'a>(title: &'a str, search_term: &'a str) -> impl egui::Widget + 'a {
+    let label = format!("{}:", title);
+    let url = format!("https://docs.rs/egui?search={}", search_term);
+    move |ui: &mut egui::Ui| {
+        ui.hyperlink_to(label, url).on_hover_ui(|ui| {
+            ui.horizontal_wrapped(|ui| {
+                ui.label("Search egui docs for");
+                ui.code(search_term);
+            });
+        })
+    }
+}
+
 impl epi::App for TemplateApp {
     fn name(&self) -> &str {
         "Taquin game"
@@ -48,6 +61,7 @@ impl epi::App for TemplateApp {
     fn save(&mut self, storage: &mut dyn epi::Storage) {
         epi::set_value(storage, epi::APP_KEY, self);
     }
+
 
     /// Called each time the UI needs repainting, which may be many times per second.
     /// Put your widgets into a `SidePanel`, `TopPanel`, `CentralPanel`, `Window` or `Area`.
@@ -112,17 +126,27 @@ impl epi::App for TemplateApp {
  */
             let size:u8 = 5;
             let maxcells :u8 = size.pow(2);
+            let mut boolean = false;
+            let mut texture = None;
+            let texture: &egui::TextureHandle = texture.get_or_insert_with(|| {
+                ui.ctx()
+                    .load_texture("exemple", egui::ColorImage::example())
+            });
+    
             assert_eq!(maxcells, 25);
             egui::Grid::new("some_unique_id").show(ui, |ui| {
                 for i in 0..maxcells{
                     let _line = i / size;
                     let col = i % size;
 
-                    //ui.label(format!("col {}; line {}", col, line));
-                    if ui.add(egui::Button::new(format!("{}",i))).clicked(){
+                    let img_size = 16.0 * texture.size_vec2() / texture.size_vec2().y;
+
+                    //ui.add(doc_link_label("I", "ImageButton"));
+                    if ui.add(egui::ImageButton::new(texture, img_size)).clicked() {
+                        boolean = !boolean;
                         println!("pressed {}",i);
                     }
-                    //egui::ImageButton::new()
+
                     if col == size - 1{
                         ui.end_row();
                     }
@@ -145,5 +169,7 @@ impl epi::App for TemplateApp {
                 ui.label("You would normally chose either panels OR windows.");
             });
         }
+
     }
+    
 }
