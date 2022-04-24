@@ -4,6 +4,8 @@
 
 // When compiling natively:
 #[cfg(not(target_arch = "wasm32"))]
+
+mod libs;
 fn main() {
     let app = taquin::TemplateApp::default();
     let native_options = eframe::NativeOptions::default();
