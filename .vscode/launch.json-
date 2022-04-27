@@ -1,0 +1,72 @@
+{
+    // Utilisez IntelliSense pour en savoir plus sur les attributs possibles.
+    // Pointez pour afficher la description des attributs existants.
+    // Pour plus d'informations, visitez : https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Launch taquin w/debug",
+            "program": "${workspaceFolder}/target/debug/taquin",
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in library 'taquin'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--lib",
+                    "--package=taquin"
+                ],
+                "filter": {
+                    "name": "taquin",
+                    "kind": "lib"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'taquin'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=taquin",
+                    "--package=taquin"
+                ],
+                "filter": {
+                    "name": "taquin",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in executable 'taquin'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=taquin",
+                    "--package=taquin"
+                ],
+                "filter": {
+                    "name": "taquin",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        }
+    ]
+}

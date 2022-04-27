@@ -1,5 +1,13 @@
 use eframe::egui::ColorImage;
 
+#[derive(Debug, Clone, Copy, PartialEq)]
+pub enum Direction{
+    Left,
+    Right,
+    Up,
+    Down,
+    Dontapply,
+}
 
 #[derive(Debug, Clone)]
 pub struct TaquinSide{
