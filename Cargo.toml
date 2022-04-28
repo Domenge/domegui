@@ -15,6 +15,8 @@ eframe = "0.17.0" # Gives us egui, epi and web+native backends
 image = "0.24.1"
 rand = "0.8.5"
 serde = { version = "1", features = ["derive"], optional = true }
+log = "0.4.16"
+env_logger = "0.9.0"
 
 [features]
 default = []

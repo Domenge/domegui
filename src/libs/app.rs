@@ -17,6 +17,13 @@ use std::{path::Path,};
 use image::{GenericImageView,};
 use std::collections::HashMap;
 use rand::{thread_rng, Rng,};
+use log::{
+    debug, 
+    // error, 
+    info, 
+    // log_enabled, 
+    // Level,
+};
 
 const BACKGROUND_IMAGE_PATH: &'static str = "./image/background.png";
 const VOID_CELL_CURRENT_IMAGE_PATH: &'static str = "./image/void_cell_current.png";
@@ -97,6 +104,7 @@ impl TemplateApp{
                                 ui.ctx()
                                     .load_texture(format!("img_col{col}_line{line}"), cell.image.clone())
                             }else if self.has_won() {
+                                info!("We have a winner.");
                                 ui.ctx()
                                     .load_texture(format!("img_col{col}_line{line}"), self.image_winner.clone())
                             }else{
@@ -170,7 +178,7 @@ impl TemplateApp{
             (_,_,_,_) => (0, Direction::Dontapply),
         };
 
-        println!("delta {}, direction {:?}",delta, direction);
+        debug!("delta {}, direction {:?}",delta, direction);
 
         if direction != Direction::Dontapply{
             for _ in 0 .. delta{
@@ -186,7 +194,7 @@ impl TemplateApp{
                 let l = self.void_cell.line;
 
 
-                println!("before col {}, line {}", c, l);
+                debug!("before col {}, line {}", c, l);
 
                 let (c, l) = match (direction, c, l){
                     (Direction::Up,    c, l)  => (c, l - 1,),
@@ -196,7 +204,7 @@ impl TemplateApp{
                     (_,_,_) => panic!("Invalid direction"),
                 };
 
-                println!("after col {}, line {}", c, l);
+                debug!("after col {}, line {}", c, l);
 
                 // Change cell clicked
                 let mut cell = self.cells_map.get_mut(&format!("{}_{}", c, l)).unwrap();
@@ -316,6 +324,7 @@ impl epi::App for TemplateApp {
         _frame: &epi::Frame,
         _storage: Option<&dyn epi::Storage>,
     ) {
+        env_logger::init();
 
         let image = image::io::Reader::open(Path::new(BACKGROUND_IMAGE_PATH)).unwrap().decode().unwrap();
         let image_void_cell = image::io::Reader::open(Path::new(VOID_CELL_CURRENT_IMAGE_PATH)).unwrap().decode().unwrap();
